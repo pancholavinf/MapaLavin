@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa Electoral de Chile</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="geojeson.js"></script>
+</head>
+<body>
+
+<div id="container">
+    <div id="sidebar">
+        <h2>Mapa Electoral de Chile</h2>
+        <select id="eleccion-selector"><option>Cargando...</option></select>
+        <button id="btn-total-pais">Ver Total País</button>
+        
+        <div id="view-selector">
+            <button class="view-btn active" data-view="resultados">Resultados</button>
+            <button class="view-btn" data-view="participacion">Participación</button>
+            <button class="view-btn" data-view="candidatos">Candidatos</button>
+        </div>
+
+        <div id="info-panel">
+            <h3 id="info-title">Información</h3>
+            
+            <div id="resultados-view" class="info-view active">
+                <table id="results-table"></table>
+                <div class="chart-container" style="height: 400px;"><canvas id="results-chart"></canvas></div>
+            </div>
+
+            <div id="participacion-view" class="info-view">
+                <div id="participation-stats"></div>
+                <div class="chart-container" style="height: 250px;"><canvas id="participation-chart"></canvas></div>
+            </div>
+
+            <div id="candidatos-view" class="info-view">
+                <!-- El contenido se generará dinámicamente -->
+            </div>
+        </div>
+    </div>
+    <div id="map"></div>
+</div>
+
+<script>
+    // --- ELEMENTOS DEL DOM ---
+    const eleccionSelector = document.getElementById('eleccion-selector');
+    const infoTitle = document.getElementById('info-title');
+    const btnTotalPais = document.getElementById('btn-total-pais');
+    const viewSelector = document.getElementById('view-selector');
+    
+    const resultsCanvas = document.getElementById('results-chart');
+    const participationCanvas = document.getElementById('participation-chart');
+    const tableElement = document.getElementById('results-table');
+    const participationStatsDiv = document.getElementById('participation-stats');
+    const candidatosView = document.getElementById('candidatos-view');
+
+    // --- ESTADO DE LA APLICACIÓN ---
+    let currentView = 'resultados';
+    let currentScope = 'pais';
+    let currentRegion = null;
+    let geojsonLayer, resultsChart, participationChart;
+
+    // --- INICIALIZACIÓN ---
+    const map = L.map('map').setView([-38, -72], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
+
+    geojsonLayer = L.geoJson(chileGeoJson, {
+        style: { color: "#4a4a4a", weight: 1, opacity: 0.6, fillColor: "#dcdcdc", fillOpacity: 0.5 },
+        onEachFeature: (f, l) => l.on({ click: onRegionClick })
+    }).addTo(map);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/api/elecciones')
+            .then(res => res.json())
+            .then(elecciones => {
+                eleccionSelector.innerHTML = '<option value="">-- Selecciona una elección --</option>';
+                elecciones.forEach(e => eleccionSelector.add(new Option(e.nombre_eleccion, e.id_eleccion)));
+                resetInfoPanel();
+            });
+    });
+
+    // --- MANEJADORES DE EVENTOS ---
+    eleccionSelector.addEventListener('change', () => {
+        const id = eleccionSelector.value;
+        if (!id) {
+            resetMap();
+            resetInfoPanel();
+            return;
+        }
+        currentScope = 'pais';
+        currentRegion = null;
+        btnTotalPais.style.display = 'none';
+        updateMap(id);
+        updateViews(id);
+    });
+
+    btnTotalPais.addEventListener('click', () => {
+        const idEleccion = eleccionSelector.value;
+        if (idEleccion) {
+            currentScope = 'pais';
+            currentRegion = null;
+            updateViews(idEleccion);
+            btnTotalPais.style.display = 'none';
+        }
+    });
+
+    viewSelector.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON') {
+            currentView = e.target.dataset.view;
+            updateActiveView();
+        }
+    });
+
+    // --- LÓGICA DE DATOS Y RENDERIZADO ---
+    function updateMap(idEleccion) {
+        fetch(`/api/resultados/mapa/${idEleccion}`)
+            .then(res => res.json())
+            .then(resultados => {
+                const mapData = new Map(resultados.map(r => [r.id_region, r]));
+                geojsonLayer.eachLayer(layer => {
+                    const regionId = layer.feature.properties.codregion;
+                    const res = mapData.get(regionId);
+                    layer.setStyle({ fillColor: res ? res.color_hex || '#dcdcdc' : '#dcdcdc', fillOpacity: 0.7 });
+                });
+            });
+    }
+
+    function updateViews(idEleccion, regionId = null, regionNombre = 'Total País') {
+        infoTitle.textContent = regionNombre;
+
+        // Resultados (Tabla y Gráfico de Barras)
+        fetch(`/api/resultados/${currentScope}/${idEleccion}/${regionId || ''}`).then(res => res.json()).then(data => {
+            if (data.length > 0) drawResults(data);
+        });
+        // Participación (Stats y Gráfico Circular)
+        fetch(`/api/estadisticas/${currentScope}/${idEleccion}/${regionId || ''}`).then(res => res.json()).then(drawParticipation);
+        // Candidatos (Tarjetas)
+        if (currentScope === 'pais') {
+            fetch(`/api/candidatos/${idEleccion}`).then(res => res.json()).then(drawCandidatos);
+        }
+    }
+
+    function drawResults(data) {
+        const totalVotos = data.reduce((sum, r) => sum + Number(r.total_votos), 0);
+        
+        tableElement.innerHTML = `<thead><tr><th>Candidato</th><th>Votos</th><th>%</th></tr></thead><tbody>` +
+            data.map(r => `<tr><td>${r.nombre_completo}</td><td>${Number(r.total_votos).toLocaleString('es-CL')}</td><td>${(totalVotos > 0 ? (Number(r.total_votos) / totalVotos) * 100 : 0).toFixed(2)}%</td></tr>`).join('') +
+            '</tbody>';
+
+        if (resultsChart) resultsChart.destroy();
+        resultsChart = new Chart(resultsCanvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: data.map(r => r.nombre_completo),
+                datasets: [{ data: data.map(r => totalVotos > 0 ? ((Number(r.total_votos) / totalVotos) * 100).toFixed(2) : 0), backgroundColor: data.map(r => r.color_hex || '#cccccc') }]
+            },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { max: 100, ticks: { callback: v => `${v}%` } } }, plugins: { legend: { display: false } } }
+        });
+    }
+
+    function drawParticipation(stats) {
+        const votantes = Number(stats.total_votantes);
+        const electores = Number(stats.total_electores);
+        const noVotantes = electores - votantes;
+        const percentage = electores > 0 ? ((votantes / electores) * 100).toFixed(2) : 0;
+
+        participationStatsDiv.innerHTML = `<p><span>Votantes:</span> ${votantes.toLocaleString('es-CL')}</p><p><span>Padrón:</span> ${electores.toLocaleString('es-CL')}</p>`;
+
+        if (participationChart) participationChart.destroy();
+        participationChart = new Chart(participationCanvas.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: [`Votantes (${percentage}%)`, 'Abstención'],
+                datasets: [{ data: [votantes, noVotantes], backgroundColor: ['#3b82f6', '#e5e7eb'] }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
+        });
+    }
+
+    function drawCandidatos(data) {
+        candidatosView.innerHTML = data.map(c => `
+            <div class="candidate-card">
+                <h5>${c.nombre_completo}</h5>
+                <p><span>Partido:</span> ${c.nombre_partido || 'Independiente'}</p>
+                <p><span>Bloque:</span> ${c.nombre_bloque || 'N/A'}</p>
+                <p><span>Tendencia:</span> ${c.tendencia || 'N/A'}</p>
+                ${c.wikipedia_url ? `<a href="${c.wikipedia_url}" target="_blank">Ver en Wikipedia</a>` : ''}
+            </div>
+        `).join('');
+    }
+
+    function onRegionClick(e) {
+        const props = e.target.feature.properties;
+        const idEleccion = eleccionSelector.value;
+        if (!idEleccion) return;
+
+        currentScope = 'region';
+        currentRegion = { id: props.codregion, nombre: props.nomregion };
+        btnTotalPais.style.display = 'block';
+        updateViews(idEleccion, currentRegion.id, currentRegion.nombre);
+    }
+    
+    function updateActiveView() {
+        document.querySelectorAll('.view-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.view === currentView));
+        document.querySelectorAll('.info-view').forEach(view => view.classList.toggle('active', view.id === `${currentView}-view`));
+    }
+
+    function resetMap() {
+        if (geojsonLayer) geojsonLayer.eachLayer(l => l.setStyle({ fillColor: "#dcdcdc", fillOpacity: 0.5 }));
+    }
+
+    function resetInfoPanel() {
+        infoTitle.textContent = 'Información';
+        if (resultsChart) resultsChart.destroy();
+        if (participationChart) participationChart.destroy();
+        tableElement.innerHTML = '';
+        participationStatsDiv.innerHTML = '';
+        candidatosView.innerHTML = '';
+        btnTotalPais.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
