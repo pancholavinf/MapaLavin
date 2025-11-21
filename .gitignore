@@ -1,0 +1,21 @@
+# Dependencias
+node_modules/
+
+# Archivos de entorno (contiene secretos y contraseñas)
+.env
+
+# Archivos de configuración de IDEs
+.idea/
+.vscode/
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de Netlify (ya no se usan)
+netlify/
+netlify.toml
+
+# Scripts locales de servidor y generación
+server.js
+generate-data.js
