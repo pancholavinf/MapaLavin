@@ -1,0 +1,32 @@
+[
+  {
+    "nombre_completo": "RICARDO LAGOS ESCOBAR",
+    "color_hex": "#911eb4",
+    "total_votos": "62244"
+  },
+  {
+    "nombre_completo": "JOAQUÍN LAVÍN INFANTE",
+    "color_hex": "#4363d8",
+    "total_votos": "42578"
+  },
+  {
+    "nombre_completo": "TOMÁS HIRSCH",
+    "color_hex": "#bcf60c",
+    "total_votos": "5037"
+  },
+  {
+    "nombre_completo": "ARTURO FREI",
+    "color_hex": "#fabebe",
+    "total_votos": "492"
+  },
+  {
+    "nombre_completo": "GLADYS MARÍN",
+    "color_hex": "#f032e6",
+    "total_votos": "386"
+  },
+  {
+    "nombre_completo": "SARA LARRAÍN",
+    "color_hex": "#46f0f0",
+    "total_votos": "273"
+  }
+]

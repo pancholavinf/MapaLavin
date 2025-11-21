@@ -1,0 +1,44 @@
+[
+  {
+    "nombre_completo": "MANFRED MAX-NEEF",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Manfred_Max-Neef",
+    "nombre_partido": "INDEPENDIENTE",
+    "nombre_bloque": "MOVIMIENTO ECOLOGISTA",
+    "tendencia": "Centro"
+  },
+  {
+    "nombre_completo": "EUGENIO PIZARRO",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Eugenio_Pizarro_Poblete",
+    "nombre_partido": "PARTIDO COMUNISTA (PC)",
+    "nombre_bloque": "ALTERNATIVA DEMOCRATICA DE IZQUIERDA (MIDA)",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "CRISTIÁN REITZE",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Cristián_Reitze",
+    "nombre_partido": "PARTIDO HUMANISTA (PH)",
+    "nombre_bloque": "ALIANZA HUMANISTA VERDE",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "ARTURO ALESSANDRI BESA",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Arturo_Alessandri_Besa",
+    "nombre_partido": "INDEPENDIENTE",
+    "nombre_bloque": "UNION POR EL PROGRESO DE CHILE (ALIANZA)",
+    "tendencia": "Derecha"
+  },
+  {
+    "nombre_completo": "EDUARDO FREI RUIZ-TAGLE",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Eduardo_Frei_Ruiz-Tagle",
+    "nombre_partido": "PARTIDO DEMOCRATA CRISTIANO (PDC)",
+    "nombre_bloque": "CONCERTACION DE PARTIDOS POR LA DEMOCRACIA",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "JOSÉ PIÑERA ECHENIQUE",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/José_Piñera",
+    "nombre_partido": "INDEPENDIENTE",
+    "nombre_bloque": null,
+    "tendencia": null
+  }
+]

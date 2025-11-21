@@ -74,7 +74,7 @@
     }).addTo(map);
 
     document.addEventListener('DOMContentLoaded', () => {
-        fetch('/api/elecciones')
+        fetch('api/elecciones.json') // <-- CAMBIO: Apunta al archivo JSON
             .then(res => res.json())
             .then(elecciones => {
                 eleccionSelector.innerHTML = '<option value="">-- Selecciona una elección --</option>';
@@ -117,7 +117,7 @@
 
     // --- LÓGICA DE DATOS Y RENDERIZADO ---
     function updateMap(idEleccion) {
-        fetch(`/api/resultados/mapa/${idEleccion}`)
+        fetch(`api/resultados/mapa/${idEleccion}.json`) // <-- CAMBIO
             .then(res => res.json())
             .then(resultados => {
                 const mapData = new Map(resultados.map(r => [r.id_region, r]));
@@ -131,16 +131,15 @@
 
     function updateViews(idEleccion, regionId = null, regionNombre = 'Total País') {
         infoTitle.textContent = regionNombre;
+        const scopePath = regionId ? `region/${idEleccion}/${regionId}` : `pais/${idEleccion}`;
 
-        // Resultados (Tabla y Gráfico de Barras)
-        fetch(`/api/resultados/${currentScope}/${idEleccion}/${regionId || ''}`).then(res => res.json()).then(data => {
+        fetch(`api/resultados/${scopePath}.json`).then(res => res.json()).then(data => {
             if (data.length > 0) drawResults(data);
         });
-        // Participación (Stats y Gráfico Circular)
-        fetch(`/api/estadisticas/${currentScope}/${idEleccion}/${regionId || ''}`).then(res => res.json()).then(drawParticipation);
-        // Candidatos (Tarjetas)
+        fetch(`api/estadisticas/${scopePath}.json`).then(res => res.json()).then(drawParticipation);
+        
         if (currentScope === 'pais') {
-            fetch(`/api/candidatos/${idEleccion}`).then(res => res.json()).then(drawCandidatos);
+            fetch(`api/candidatos/${idEleccion}.json`).then(res => res.json()).then(drawCandidatos);
         }
     }
 
@@ -163,8 +162,8 @@
     }
 
     function drawParticipation(stats) {
-        const votantes = Number(stats.total_votantes);
-        const electores = Number(stats.total_electores);
+        const votantes = Number(stats.total_votantes) || 0;
+        const electores = Number(stats.total_electores) || 0;
         const noVotantes = electores - votantes;
         const percentage = electores > 0 ? ((votantes / electores) * 100).toFixed(2) : 0;
 

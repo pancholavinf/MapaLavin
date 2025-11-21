@@ -1,0 +1,22 @@
+[
+  {
+    "nombre_completo": "MICHELLE BACHELET JERIA",
+    "color_hex": "#800000",
+    "total_votos": "137633"
+  },
+  {
+    "nombre_completo": "JOAQUÍN LAVÍN INFANTE",
+    "color_hex": "#4363d8",
+    "total_votos": "62390"
+  },
+  {
+    "nombre_completo": "SEBASTIÁN PIÑERA ECHENIQUE",
+    "color_hex": "#fabebe",
+    "total_votos": "50065"
+  },
+  {
+    "nombre_completo": "TOMÁS HIRSCH GOLDSCHMIDT",
+    "color_hex": "#f58231",
+    "total_votos": "13700"
+  }
+]

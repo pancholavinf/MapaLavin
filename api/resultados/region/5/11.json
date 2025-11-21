@@ -1,0 +1,37 @@
+[
+  {
+    "nombre_completo": "JOSÉ ANTONIO KAST RIST",
+    "color_hex": "#4363d8",
+    "total_votos": "11761"
+  },
+  {
+    "nombre_completo": "GABRIEL BORIC FONT",
+    "color_hex": "#ffe119",
+    "total_votos": "9975"
+  },
+  {
+    "nombre_completo": "YASNA PROVOSTE CAMPILLAY",
+    "color_hex": "#f58231",
+    "total_votos": "6574"
+  },
+  {
+    "nombre_completo": "FRANCO PARISI FERNÁNDEZ",
+    "color_hex": "#bcf60c",
+    "total_votos": "5153"
+  },
+  {
+    "nombre_completo": "SEBASTIÁN SICHEL RAMÍREZ",
+    "color_hex": "#911eb4",
+    "total_votos": "3921"
+  },
+  {
+    "nombre_completo": "MARCO ENRÍQUEZ-OMINAMI GUMUCIO",
+    "color_hex": "#f032e6",
+    "total_votos": "2017"
+  },
+  {
+    "nombre_completo": "EDUARDO ARTÉS BRICHETTI",
+    "color_hex": "#46f0f0",
+    "total_votos": "508"
+  }
+]

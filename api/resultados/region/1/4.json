@@ -1,0 +1,12 @@
+[
+  {
+    "nombre_completo": "RECHAZO",
+    "color_hex": "#3cb44b",
+    "total_votos": "325195"
+  },
+  {
+    "nombre_completo": "APRUEBO",
+    "color_hex": "#e6194b",
+    "total_votos": "217808"
+  }
+]

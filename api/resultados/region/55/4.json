@@ -1,0 +1,32 @@
+[
+  {
+    "nombre_completo": "EDUARDO FREI RUIZ-TAGLE",
+    "color_hex": "#3cb44b",
+    "total_votos": "154883"
+  },
+  {
+    "nombre_completo": "ARTURO ALESSANDRI BESA",
+    "color_hex": "#fffac8",
+    "total_votos": "52912"
+  },
+  {
+    "nombre_completo": "EUGENIO PIZARRO",
+    "color_hex": "#e6beff",
+    "total_votos": "16673"
+  },
+  {
+    "nombre_completo": "JOSÉ PIÑERA ECHENIQUE",
+    "color_hex": "#800000",
+    "total_votos": "13985"
+  },
+  {
+    "nombre_completo": "MANFRED MAX-NEEF",
+    "color_hex": "#008080",
+    "total_votos": "10129"
+  },
+  {
+    "nombre_completo": "CRISTIÁN REITZE",
+    "color_hex": "#9a6324",
+    "total_votos": "2807"
+  }
+]

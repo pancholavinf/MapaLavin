@@ -1,0 +1,130 @@
+[
+  {
+    "id_eleccion": 1,
+    "nombre_eleccion": "Plebiscito (2022)",
+    "fecha_eleccion": "2022-09-04T04:00:00.000Z",
+    "tipo_eleccion": "Plebiscito",
+    "vuelta": "Unica",
+    "codigo_eleccion": "2022-P"
+  },
+  {
+    "id_eleccion": 3,
+    "nombre_eleccion": "Presidencial 2 (2021)",
+    "fecha_eleccion": "2021-12-19T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "2",
+    "codigo_eleccion": "2021-R2"
+  },
+  {
+    "id_eleccion": 5,
+    "nombre_eleccion": "Presidencial 1 (2021)",
+    "fecha_eleccion": "2021-11-21T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "1",
+    "codigo_eleccion": "2021-R1"
+  },
+  {
+    "id_eleccion": 12,
+    "nombre_eleccion": "Plebiscito (2020)",
+    "fecha_eleccion": "2020-10-25T03:00:00.000Z",
+    "tipo_eleccion": "Plebiscito",
+    "vuelta": "Unica",
+    "codigo_eleccion": "2020-P"
+  },
+  {
+    "id_eleccion": 14,
+    "nombre_eleccion": "Presidencial 2 (2017)",
+    "fecha_eleccion": "2017-12-17T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "2",
+    "codigo_eleccion": "2017-R2"
+  },
+  {
+    "id_eleccion": 16,
+    "nombre_eleccion": "Presidencial 1 (2017)",
+    "fecha_eleccion": "2017-11-19T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "1",
+    "codigo_eleccion": "2017-R1"
+  },
+  {
+    "id_eleccion": 24,
+    "nombre_eleccion": "Presidencial 2 (2013)",
+    "fecha_eleccion": "2013-12-15T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "2",
+    "codigo_eleccion": "2013-R2"
+  },
+  {
+    "id_eleccion": 26,
+    "nombre_eleccion": "Presidencial 1 (2013)",
+    "fecha_eleccion": "2013-11-17T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "1",
+    "codigo_eleccion": "2013-R1"
+  },
+  {
+    "id_eleccion": 35,
+    "nombre_eleccion": "Presidencial 2 (2010)",
+    "fecha_eleccion": "2010-01-17T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "2",
+    "codigo_eleccion": "2009-R2"
+  },
+  {
+    "id_eleccion": 37,
+    "nombre_eleccion": "Presidencial 1 (2009)",
+    "fecha_eleccion": "2009-12-13T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "1",
+    "codigo_eleccion": "2009-R1"
+  },
+  {
+    "id_eleccion": 41,
+    "nombre_eleccion": "Presidencial 2 (2006)",
+    "fecha_eleccion": "2006-01-15T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "2",
+    "codigo_eleccion": "2005-R2"
+  },
+  {
+    "id_eleccion": 43,
+    "nombre_eleccion": "Presidencial 1 (2005)",
+    "fecha_eleccion": "2005-12-11T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "1",
+    "codigo_eleccion": "2005-R1"
+  },
+  {
+    "id_eleccion": 47,
+    "nombre_eleccion": "Presidencial 2 (2000)",
+    "fecha_eleccion": "2000-01-16T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "2",
+    "codigo_eleccion": "1999-R2"
+  },
+  {
+    "id_eleccion": 49,
+    "nombre_eleccion": "Presidencial 1 (1999)",
+    "fecha_eleccion": "1999-12-12T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "1",
+    "codigo_eleccion": "1999-R1"
+  },
+  {
+    "id_eleccion": 55,
+    "nombre_eleccion": "Presidencial (1993)",
+    "fecha_eleccion": "1993-12-11T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "Unica",
+    "codigo_eleccion": "1993-R1"
+  },
+  {
+    "id_eleccion": 61,
+    "nombre_eleccion": "Presidencial (1989)",
+    "fecha_eleccion": "1989-12-14T03:00:00.000Z",
+    "tipo_eleccion": "Presidencial",
+    "vuelta": "Unica",
+    "codigo_eleccion": "1989-R1"
+  }
+]

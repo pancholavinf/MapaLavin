@@ -1,0 +1,42 @@
+[
+  {
+    "nombre_completo": "SEBASTIÁN PIÑERA ECHENIQUE",
+    "color_hex": "#fabebe",
+    "total_votos": "93685"
+  },
+  {
+    "nombre_completo": "ALEJANDRO GUILLIER ÁLVAREZ",
+    "color_hex": "#008080",
+    "total_votos": "68663"
+  },
+  {
+    "nombre_completo": "BEATRIZ SÁNCHEZ MUÑOZ",
+    "color_hex": "#9a6324",
+    "total_votos": "47828"
+  },
+  {
+    "nombre_completo": "CAROLINA GOIC BOROEVIC",
+    "color_hex": "#e6beff",
+    "total_votos": "16207"
+  },
+  {
+    "nombre_completo": "MARCO ENRÍQUEZ-OMINAMI GUMUCIO",
+    "color_hex": "#f032e6",
+    "total_votos": "13134"
+  },
+  {
+    "nombre_completo": "JOSÉ ANTONIO KAST RIST",
+    "color_hex": "#4363d8",
+    "total_votos": "11638"
+  },
+  {
+    "nombre_completo": "EDUARDO ARTÉS BRICHETTI",
+    "color_hex": "#46f0f0",
+    "total_votos": "1286"
+  },
+  {
+    "nombre_completo": "ALEJANDRO NAVARRO BRAIN",
+    "color_hex": "#fffac8",
+    "total_votos": "747"
+  }
+]

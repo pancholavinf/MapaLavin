@@ -1,0 +1,65 @@
+[
+  {
+    "nombre_completo": "FRANCO PARISI FERNÁNDEZ",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Franco_Parisi",
+    "nombre_partido": "INDEPENDIENTE",
+    "nombre_bloque": null,
+    "tendencia": null
+  },
+  {
+    "nombre_completo": "MARCEL CLAUDE REYES",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Marcel_Claude",
+    "nombre_partido": "PARTIDO HUMANISTA (PH)",
+    "nombre_bloque": "TODOS A LA MONEDA",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "RICARDO ISRAEL ZIPPER",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Ricardo_Israel",
+    "nombre_partido": "PARTIDO REGIONALISTA (PRI)",
+    "nombre_bloque": "PARTIDO REGIONALISTA",
+    "tendencia": "Centro"
+  },
+  {
+    "nombre_completo": "ROXANA MIRANDA MENESES",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Roxana_Miranda",
+    "nombre_partido": "PARTIDO IGUALDAD",
+    "nombre_bloque": "PARTIDO IGUALDAD",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "EVELYN MATTHEI FORNET",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Evelyn_Matthei",
+    "nombre_partido": "UNION DEMOCRATA INDEPENDIENTE (UDI)",
+    "nombre_bloque": "ALIANZA",
+    "tendencia": "Derecha"
+  },
+  {
+    "nombre_completo": "ALFREDO SFEIR YOUNIS",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Alfredo_Sfeir",
+    "nombre_partido": "PARTIDO ECOLOGISTA VERDE (PEV)",
+    "nombre_bloque": "PARTIDO ECOLOGISTA VERDE",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "TOMÁS JOCELYN-HOLT LETELIER",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Tomás_Jocelyn-Holt",
+    "nombre_partido": "INDEPENDIENTE (EX-DC)",
+    "nombre_bloque": null,
+    "tendencia": null
+  },
+  {
+    "nombre_completo": "MARCO ENRÍQUEZ-OMINAMI GUMUCIO",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Marco_Enríquez-Ominami",
+    "nombre_partido": "PARTIDO PROGRESISTA (PRO)",
+    "nombre_bloque": "SI TU QUIERES, CHILE CAMBIA",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "MICHELLE BACHELET JERIA",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Michelle_Bachelet",
+    "nombre_partido": "PARTIDO SOCIALISTA (PS)",
+    "nombre_bloque": "NUEVA MAYORIA",
+    "tendencia": "Izquierda"
+  }
+]

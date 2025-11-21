@@ -1,0 +1,58 @@
+[
+  {
+    "nombre_completo": "CAROLINA GOIC BOROEVIC",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Carolina_Goic",
+    "nombre_partido": "PARTIDO DEMOCRATA CRISTIANO (PDC)",
+    "nombre_bloque": "PARTIDO DEMOCRATA CRISTIANO (LISTA PROPIA)",
+    "tendencia": "Centro"
+  },
+  {
+    "nombre_completo": "JOSÉ ANTONIO KAST RIST",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/José_Antonio_Kast",
+    "nombre_partido": "INDEPENDIENTE (EX-UDI)",
+    "nombre_bloque": null,
+    "tendencia": null
+  },
+  {
+    "nombre_completo": "ALEJANDRO GUILLIER ÁLVAREZ",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Alejandro_Guillier",
+    "nombre_partido": "INDEPENDIENTE (PRO-PR)",
+    "nombre_bloque": "LA FUERZA DE LA MAYORIA",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "BEATRIZ SÁNCHEZ MUÑOZ",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Beatriz_Sánchez",
+    "nombre_partido": "INDEPENDIENTE (PRO-RD)",
+    "nombre_bloque": "FRENTE AMPLIO",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "EDUARDO ARTÉS BRICHETTI",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Eduardo_Artés",
+    "nombre_partido": "UNION PATRIOTICA (UPA)",
+    "nombre_bloque": "UNION PATRIOTICA",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "ALEJANDRO NAVARRO BRAIN",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Alejandro_Navarro",
+    "nombre_partido": "PAIS",
+    "nombre_bloque": "PAIS",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "MARCO ENRÍQUEZ-OMINAMI GUMUCIO",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Marco_Enríquez-Ominami",
+    "nombre_partido": "PARTIDO PROGRESISTA (PRO)",
+    "nombre_bloque": "PARTIDO PROGRESISTA",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "SEBASTIÁN PIÑERA ECHENIQUE",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Sebastián_Piñera",
+    "nombre_partido": "INDEPENDIENTE (RN SUSPENDIDO)",
+    "nombre_bloque": "CHILE VAMOS",
+    "tendencia": "Derecha"
+  }
+]

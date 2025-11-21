@@ -1,0 +1,22 @@
+[
+  {
+    "nombre_completo": "SEBASTIÁN PIÑERA ECHENIQUE",
+    "color_hex": "#fabebe",
+    "total_votos": "169650"
+  },
+  {
+    "nombre_completo": "EDUARDO FREI RUIZ-TAGLE",
+    "color_hex": "#3cb44b",
+    "total_votos": "141532"
+  },
+  {
+    "nombre_completo": "MARCO ENRÍQUEZ-OMINAMI GUMUCIO",
+    "color_hex": "#f032e6",
+    "total_votos": "68572"
+  },
+  {
+    "nombre_completo": "JORGE ARRATE M.",
+    "color_hex": "#ffe119",
+    "total_votos": "19168"
+  }
+]

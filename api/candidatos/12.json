@@ -1,0 +1,16 @@
+[
+  {
+    "nombre_completo": "APRUEBO",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Plebiscito_nacional_de_Chile_de_2020",
+    "nombre_partido": null,
+    "nombre_bloque": "PARTIDOS DE EX-CONCERTACION + FRENTE AMPLIO",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "RECHAZO",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Plebiscito_nacional_de_Chile_de_2020",
+    "nombre_partido": null,
+    "nombre_bloque": "CHILE VAMOS + PARTIDO REPUBLICANO",
+    "tendencia": "Derecha"
+  }
+]

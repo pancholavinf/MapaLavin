@@ -1,0 +1,47 @@
+[
+  {
+    "nombre_completo": "MICHELLE BACHELET JERIA",
+    "color_hex": "#800000",
+    "total_votos": "243613"
+  },
+  {
+    "nombre_completo": "EVELYN MATTHEI FORNET",
+    "color_hex": "#aaffc3",
+    "total_votos": "96727"
+  },
+  {
+    "nombre_completo": "FRANCO PARISI FERNÁNDEZ",
+    "color_hex": "#bcf60c",
+    "total_votos": "39768"
+  },
+  {
+    "nombre_completo": "MARCO ENRÍQUEZ-OMINAMI GUMUCIO",
+    "color_hex": "#f032e6",
+    "total_votos": "31577"
+  },
+  {
+    "nombre_completo": "MARCEL CLAUDE REYES",
+    "color_hex": "#808000",
+    "total_votos": "5816"
+  },
+  {
+    "nombre_completo": "ALFREDO SFEIR YOUNIS",
+    "color_hex": "#808080",
+    "total_votos": "5520"
+  },
+  {
+    "nombre_completo": "ROXANA MIRANDA MENESES",
+    "color_hex": "#000075",
+    "total_votos": "3706"
+  },
+  {
+    "nombre_completo": "RICARDO ISRAEL ZIPPER",
+    "color_hex": "#ffd8b1",
+    "total_votos": "1898"
+  },
+  {
+    "nombre_completo": "TOMÁS JOCELYN-HOLT LETELIER",
+    "color_hex": "#e6194b",
+    "total_votos": "1215"
+  }
+]

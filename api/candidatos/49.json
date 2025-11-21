@@ -1,0 +1,44 @@
+[
+  {
+    "nombre_completo": "GLADYS MARÍN",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Gladys_Marín",
+    "nombre_partido": "PARTIDO COMUNISTA (PC)",
+    "nombre_bloque": "LA IZQUIERDA",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "ARTURO FREI",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Arturo_Frei_Bolívar",
+    "nombre_partido": "INDEPENDIENTE (EX-DC)",
+    "nombre_bloque": "UNION DE CENTRO CENTRO (UCC)",
+    "tendencia": "Derecha"
+  },
+  {
+    "nombre_completo": "JOAQUÍN LAVÍN INFANTE",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Joaquín_Lavín",
+    "nombre_partido": "UNION DEMOCRATA INDEPENDIENTE (UDI)",
+    "nombre_bloque": "ALIANZA POR CHILE",
+    "tendencia": "Derecha"
+  },
+  {
+    "nombre_completo": "TOMÁS HIRSCH",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Tomás_Hirsch",
+    "nombre_partido": "PARTIDO HUMANISTA (PH)",
+    "nombre_bloque": "ALIANZA HUMANISTA VERDE",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "RICARDO LAGOS ESCOBAR",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Ricardo_Lagos",
+    "nombre_partido": "PARTIDO SOCIALISTA (PS)",
+    "nombre_bloque": "CONCERTACION DE PARTIDOS POR LA DEMOCRACIA",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "SARA LARRAÍN",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Sara_Larraín",
+    "nombre_partido": "INDEPENDIENTE",
+    "nombre_bloque": null,
+    "tendencia": null
+  }
+]

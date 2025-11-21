@@ -1,0 +1,82 @@
+[
+  {
+    "id_region": 1,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 2,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 3,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 4,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 5,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 6,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 7,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 8,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 9,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 10,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 11,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 12,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 13,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 14,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 15,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "id_region": 16,
+    "ganador": "RECHAZO",
+    "color_hex": "#3cb44b"
+  }
+]

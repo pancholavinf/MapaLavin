@@ -1,0 +1,51 @@
+[
+  {
+    "nombre_completo": "GABRIEL BORIC FONT",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Gabriel_Boric",
+    "nombre_partido": "CONVERGENCIA SOCIAL (CS)",
+    "nombre_bloque": "APRUEBO DIGNIDAD",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "YASNA PROVOSTE CAMPILLAY",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Yasna_Provoste",
+    "nombre_partido": "PARTIDO DEMOCRATA CRISTIANO (PDC)",
+    "nombre_bloque": "NUEVO PACTO SOCIAL",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "SEBASTIÁN SICHEL RAMÍREZ",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Sebastián_Sichel",
+    "nombre_partido": "INDEPENDIENTE",
+    "nombre_bloque": "CHILE VAMOS",
+    "tendencia": "Derecha"
+  },
+  {
+    "nombre_completo": "JOSÉ ANTONIO KAST RIST",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/José_Antonio_Kast",
+    "nombre_partido": "PARTIDO REPUBLICANO (PLR)",
+    "nombre_bloque": "FRENTE SOCIAL CRISTIANO",
+    "tendencia": "Derecha"
+  },
+  {
+    "nombre_completo": "EDUARDO ARTÉS BRICHETTI",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Eduardo_Artés",
+    "nombre_partido": "UNION PATRIOTICA (UPA)",
+    "nombre_bloque": "UNION PATRIOTICA",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "FRANCO PARISI FERNÁNDEZ",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Franco_Parisi",
+    "nombre_partido": "PARTIDO DE LA GENTE (PDG)",
+    "nombre_bloque": "PARTIDO DE LA GENTE",
+    "tendencia": "Centro"
+  },
+  {
+    "nombre_completo": "MARCO ENRÍQUEZ-OMINAMI GUMUCIO",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Marco_Enríquez-Ominami",
+    "nombre_partido": "PARTIDO PROGRESISTA (PRO)",
+    "nombre_bloque": "PARTIDO PROGRESISTA",
+    "tendencia": "Izquierda"
+  }
+]

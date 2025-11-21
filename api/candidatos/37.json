@@ -1,0 +1,30 @@
+[
+  {
+    "nombre_completo": "MARCO ENRÍQUEZ-OMINAMI GUMUCIO",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Marco_Enríquez-Ominami",
+    "nombre_partido": "INDEPENDIENTE (EX-PS)",
+    "nombre_bloque": "NUEVA MAYORIA PARA CHILE",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "SEBASTIÁN PIÑERA ECHENIQUE",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Sebastián_Piñera",
+    "nombre_partido": "RENOVACION NACIONAL (RN)",
+    "nombre_bloque": "COALICION POR EL CAMBIO",
+    "tendencia": "Derecha"
+  },
+  {
+    "nombre_completo": "JORGE ARRATE M.",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Jorge_Arrate",
+    "nombre_partido": "PARTIDO COMUNISTA (PC)",
+    "nombre_bloque": "JUNTOS PODEMOS MAS",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "EDUARDO FREI RUIZ-TAGLE",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Eduardo_Frei_Ruiz-Tagle",
+    "nombre_partido": "PARTIDO DEMOCRATA CRISTIANO (PDC)",
+    "nombre_bloque": "CONCERTACION DE PARTIDOS POR LA DEMOCRACIA",
+    "tendencia": "Izquierda"
+  }
+]

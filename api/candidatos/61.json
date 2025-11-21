@@ -1,0 +1,23 @@
+[
+  {
+    "nombre_completo": "HERNÁN BÜCHI BUC",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Hernán_Büchi",
+    "nombre_partido": "INDEPENDIENTE",
+    "nombre_bloque": "DEMOCRACIA Y PROGRESO (ALIANZA)",
+    "tendencia": "Derecha"
+  },
+  {
+    "nombre_completo": "PATRICIO AYLWIN AZÓCAR",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Patricio_Aylwin",
+    "nombre_partido": "PARTIDO DEMOCRATA CRISTIANO (PDC)",
+    "nombre_bloque": "CONCERTACION DE PARTIDOS POR LA DEMOCRACIA",
+    "tendencia": "Izquierda"
+  },
+  {
+    "nombre_completo": "FRANCISCO JAVIER ERRÁZURIZ",
+    "wikipedia_url": "https://es.wikipedia.org/wiki/Francisco_Javier_Errazuriz_Talavera",
+    "nombre_partido": "INDEPENDIENTE",
+    "nombre_bloque": null,
+    "tendencia": null
+  }
+]
