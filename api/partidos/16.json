@@ -1,0 +1,42 @@
+[
+  {
+    "nombre_partido": "INDEPENDIENTE (RN SUSPENDIDO)",
+    "total_votos": "2411317",
+    "color_hex": "#fabebe"
+  },
+  {
+    "nombre_partido": "INDEPENDIENTE (PRO-PR)",
+    "total_votos": "1491473",
+    "color_hex": "#008080"
+  },
+  {
+    "nombre_partido": "INDEPENDIENTE (PRO-RD)",
+    "total_votos": "1332450",
+    "color_hex": "#9a6324"
+  },
+  {
+    "nombre_partido": "INDEPENDIENTE (EX-UDI)",
+    "total_votos": "522145",
+    "color_hex": "#4363d8"
+  },
+  {
+    "nombre_partido": "PARTIDO DEMOCRATA CRISTIANO (PDC)",
+    "total_votos": "386398",
+    "color_hex": "#e6beff"
+  },
+  {
+    "nombre_partido": "PARTIDO PROGRESISTA (PRO)",
+    "total_votos": "376162",
+    "color_hex": "#f032e6"
+  },
+  {
+    "nombre_partido": "UNION PATRIOTICA (UPA)",
+    "total_votos": "33443",
+    "color_hex": "#46f0f0"
+  },
+  {
+    "nombre_partido": "PAIS",
+    "total_votos": "23829",
+    "color_hex": "#fffac8"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "nombre_partido": "PARTIDO REPUBLICANO (PLR)",
+    "total_votos": "1954607",
+    "color_hex": "#4363d8"
+  },
+  {
+    "nombre_partido": "CONVERGENCIA SOCIAL (CS)",
+    "total_votos": "1796851",
+    "color_hex": "#ffe119"
+  },
+  {
+    "nombre_partido": "PARTIDO DE LA GENTE (PDG)",
+    "total_votos": "899067",
+    "color_hex": "#bcf60c"
+  },
+  {
+    "nombre_partido": "INDEPENDIENTE",
+    "total_votos": "894838",
+    "color_hex": "#911eb4"
+  },
+  {
+    "nombre_partido": "PARTIDO DEMOCRATA CRISTIANO (PDC)",
+    "total_votos": "813407",
+    "color_hex": "#f58231"
+  },
+  {
+    "nombre_partido": "PARTIDO PROGRESISTA (PRO)",
+    "total_votos": "533554",
+    "color_hex": "#f032e6"
+  },
+  {
+    "nombre_partido": "UNION PATRIOTICA (UPA)",
+    "total_votos": "102209",
+    "color_hex": "#46f0f0"
+  }
+]
