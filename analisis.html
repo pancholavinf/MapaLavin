@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Análisis Electoral - Mapa Electoral de Chile</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js"></script>
+    <script src="geojeson.js"></script>
+</head>
+
+<body class="analysis-mode">
+
+    <div id="container">
+        <div id="sidebar" class="wide-sidebar">
+            <div class="header-nav">
+                <a href="index.html" class="back-link">← Volver al Mapa</a>
+                <h2>Análisis y Comparación</h2>
+            </div>
+
+            <div class="analysis-controls">
+                <div class="control-group">
+                    <label>Modo:</label>
+                    <div class="mode-selector">
+                        <button class="mode-btn active" data-mode="compare">Comparar Elecciones</button>
+                        <button class="mode-btn" data-mode="candidate">Analizar Candidato</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="compare-view" class="analysis-view active">
+                <div class="selection-area">
+                    <div class="select-box">
+                        <label>Elección 1</label>
+                        <select id="eleccion-1" class="eleccion-select">
+                            <option value="">Seleccionar...</option>
+                        </select>
+                    </div>
+                    <div class="select-box">
+                        <label>Elección 2</label>
+                        <select id="eleccion-2" class="eleccion-select">
+                            <option value="">Seleccionar...</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="comparison-results">
+                    <p class="placeholder-text">Selecciona dos elecciones para comparar sus resultados.</p>
+                </div>
+            </div>
+
+            <div id="candidate-view" class="analysis-view">
+                <div class="selection-area">
+                    <div class="select-box full-width">
+                        <label>Buscar Candidato</label>
+                        <input type="text" id="candidate-search" placeholder="Escribe el nombre del candidato...">
+                        <div id="candidate-suggestions" class="suggestions-list"></div>
+                    </div>
+                </div>
+                <div id="candidate-details">
+                    <p class="placeholder-text">Busca un candidato para ver su historial y mapa de calor.</p>
+                </div>
+            </div>
+
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <script>
+        // Initialize Map
+        const map = L.map('map').setView([-38, -72], 4);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
+
+        let geojsonLayer = L.geoJson(chileGeoJson, {
+            style: { color: "#4a4a4a", weight: 1, opacity: 0.6, fillColor: "#dcdcdc", fillOpacity: 0.5 },
+            onEachFeature: (f, l) => {
+                l.bindTooltip(f.properties.nomregion, { sticky: true });
+            }
+        }).addTo(map);
+
+        // State
+        let eleccionesData = [];
+        let candidatosData = []; // Cache for search
+
+        // DOM Elements
+        const eleccion1Select = document.getElementById('eleccion-1');
+        const eleccion2Select = document.getElementById('eleccion-2');
+        const candidateSearch = document.getElementById('candidate-search');
+        const candidateSuggestions = document.getElementById('candidate-suggestions');
+
+        // Load Initial Data
+        document.addEventListener('DOMContentLoaded', async () => {
+            const res = await fetch('api/elecciones.json');
+            eleccionesData = await res.json();
+
+            eleccionesData.forEach(e => {
+                const opt = new Option(e.nombre_eleccion, e.id_eleccion);
+                eleccion1Select.add(opt.cloneNode(true));
+                eleccion2Select.add(opt.cloneNode(true));
+            });
+
+            // Pre-load candidates for search (simplified for demo, in real app might search via API)
+            // For now we will load candidates when an election is selected or lazily
+            // To make search work across ALL elections, we'd need a master candidate list. 
+            // We'll simulate this by fetching candidates from the first few elections for the demo.
+            loadAllCandidates();
+        });
+
+        async function loadAllCandidates() {
+            // In a real app, this should be a dedicated endpoint. 
+            // We will iterate available elections to build a search index.
+            const allCandidatos = new Map();
+
+            for (const el of eleccionesData) {
+                try {
+                    const res = await fetch(`api/candidatos/${el.id_eleccion}.json`);
+                    const cands = await res.json();
+                    cands.forEach(c => {
+                        if (!allCandidatos.has(c.nombre_completo)) {
+                            allCandidatos.set(c.nombre_completo, { ...c, elecciones: [] });
+                        }
+                        allCandidatos.get(c.nombre_completo).elecciones.push(el.id_eleccion);
+                    });
+                } catch (e) { console.warn('No candidates for', el.id_eleccion); }
+            }
+            candidatosData = Array.from(allCandidatos.values());
+        }
+
+        // Mode Switching
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.analysis-view').forEach(v => v.classList.remove('active'));
+
+                e.target.classList.add('active');
+                document.getElementById(`${e.target.dataset.mode}-view`).classList.add('active');
+
+                // Reset map when switching modes
+                resetMap();
+            });
+        });
+
+        // Comparison Logic
+        [eleccion1Select, eleccion2Select].forEach(sel => {
+            sel.addEventListener('change', compareElections);
+        });
+
+        async function compareElections() {
+            const id1 = eleccion1Select.value;
+            const id2 = eleccion2Select.value;
+            const container = document.getElementById('comparison-results');
+
+            if (!id1 || !id2) return;
+
+            container.innerHTML = '<p class="loader">Cargando datos...</p>';
+
+            try {
+                const [res1, res2] = await Promise.all([
+                    fetch(`api/resultados/pais/${id1}.json`).then(r => r.json()),
+                    fetch(`api/resultados/pais/${id2}.json`).then(r => r.json())
+                ]);
+
+                renderComparison(res1, res2, id1, id2);
+            } catch (e) {
+                container.innerHTML = '<p class="error">Error al cargar datos.</p>';
+            }
+        }
+
+        function renderComparison(data1, data2, id1, id2) {
+            const container = document.getElementById('comparison-results');
+            const name1 = eleccionesData.find(e => e.id_eleccion == id1).nombre_eleccion;
+            const name2 = eleccionesData.find(e => e.id_eleccion == id2).nombre_eleccion;
+
+            // Simple Side-by-Side Table
+            let html = `
+            <div class="comparison-grid">
+                <div class="comp-col">
+                    <h3>${name1}</h3>
+                    ${renderMiniTable(data1)}
+                </div>
+                <div class="comp-col">
+                    <h3>${name2}</h3>
+                    ${renderMiniTable(data2)}
+                </div>
+            </div>
+        `;
+            container.innerHTML = html;
+        }
+
+        function renderMiniTable(data) {
+            const total = data.reduce((s, r) => s + Number(r.total_votos), 0);
+            return `
+            <table class="mini-table">
+                ${data.map(r => `
+                    <tr>
+                        <td><span class="color-dot" style="background:${r.color_hex}"></span> ${r.nombre_completo}</td>
+                        <td class="text-right">${((Number(r.total_votos) / total) * 100).toFixed(1)}%</td>
+                    </tr>
+                `).join('')}
+            </table>
+        `;
+        }
+
+        // Candidate Analysis & Heatmap Logic
+        candidateSearch.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            if (term.length < 2) { candidateSuggestions.innerHTML = ''; return; }
+
+            const matches = candidatosData.filter(c => c.nombre_completo.toLowerCase().includes(term)).slice(0, 5);
+            candidateSuggestions.innerHTML = matches.map(c => `
+            <div class="suggestion-item" onclick="analyzeCandidate('${c.nombre_completo}')">
+                ${c.nombre_completo} <small>(${c.nombre_partido || 'Ind.'})</small>
+            </div>
+        `).join('');
+        });
+
+        window.analyzeCandidate = async (name) => {
+            candidateSuggestions.innerHTML = '';
+            candidateSearch.value = name;
+            const candidate = candidatosData.find(c => c.nombre_completo === name);
+            const container = document.getElementById('candidate-details');
+
+            if (!candidate) return;
+
+            container.innerHTML = '<p class="loader">Analizando historial...</p>';
+
+            // 1. Fetch results for this candidate across all their elections
+            const history = [];
+            const regionVotes = new Map(); // region_id -> { total_votes: 0, candidate_votes: 0 }
+
+            for (const idEleccion of candidate.elecciones) {
+                // Get national result for summary
+                const natRes = await fetch(`api/resultados/pais/${idEleccion}.json`).then(r => r.json());
+                const myRes = natRes.find(r => r.nombre_completo === name);
+                if (myRes) history.push({ election: idEleccion, ...myRes });
+
+                // Get regional breakdown for heatmap
+                const mapRes = await fetch(`api/resultados/mapa/${idEleccion}.json`).then(r => r.json());
+                // Note: mapRes usually contains the WINNER. We need detailed regional data.
+                // If the API doesn't support "all candidates per region", we might have to fetch region by region.
+                // Assuming we have a way to get detailed regional data. 
+                // For this demo, let's assume we iterate regions (expensive) or have a bulk endpoint.
+                // Let's try to fetch `api/resultados/region/${idEleccion}/{regionId}.json` for all regions? Too many requests.
+                // OPTIMIZATION: We'll use the `mapa` endpoint if it has detailed data, otherwise we might need a new endpoint.
+                // Checking `api/resultados/mapa` structure... it returns an array of regions with the winner.
+                // We need the specific candidate's votes.
+
+                // FALLBACK STRATEGY for Demo: Generate synthetic heatmap data based on the candidate's national performance 
+                // combined with some random regional variance if we can't get real data easily without 16 calls.
+                // OR: Just do the 16 calls for the selected candidate. It's acceptable for a specific analysis action.
+
+                const regions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+                await Promise.all(regions.map(async (rId) => {
+                    try {
+                        const rData = await fetch(`api/resultados/region/${idEleccion}/${rId}.json`).then(r => r.json());
+                        const cData = rData.find(r => r.nombre_completo === name);
+                        if (cData) {
+                            const total = rData.reduce((s, x) => s + Number(x.total_votos), 0);
+                            if (!regionVotes.has(rId)) regionVotes.set(rId, []);
+                            regionVotes.get(rId).push({ pct: Number(cData.total_votos) / total });
+                        }
+                    } catch (e) { }
+                }));
+            }
+
+            // 2. Render Details
+            container.innerHTML = `
+            <div class="candidate-profile">
+                <h3>${candidate.nombre_completo}</h3>
+                <p><strong>Partido:</strong> ${candidate.nombre_partido || 'Independiente'}</p>
+                <div class="history-list">
+                    <h4>Historial Electoral</h4>
+                    ${history.map(h => `
+                        <div class="history-item">
+                            <span>${eleccionesData.find(e => e.id_eleccion == h.election).nombre_eleccion}</span>
+                            <strong>${Number(h.total_votos).toLocaleString('es-CL')} votos</strong>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="heatmap-legend">
+                    <h4>Mapa de Calor (Promedio Histórico)</h4>
+                    <div class="gradient-bar" style="background: linear-gradient(to right, #eee, ${candidate.color_hex || '#333'})"></div>
+                    <div class="legend-labels"><span>Menos Votos</span><span>Más Votos</span></div>
+                </div>
+            </div>
+        `;
+
+            // 3. Update Heatmap
+            updateHeatmap(regionVotes, candidate.color_hex || '#333333');
+        };
+
+        function updateHeatmap(regionVotesMap, baseColor) {
+            // Calculate average per region
+            const regionavgs = new Map();
+            let minPct = 1, maxPct = 0;
+
+            regionVotesMap.forEach((votes, rId) => {
+                const avg = votes.reduce((s, v) => s + v.pct, 0) / votes.length;
+                regionavgs.set(rId, avg);
+                if (avg < minPct) minPct = avg;
+                if (avg > maxPct) maxPct = avg;
+            });
+
+            // Generate color scale
+            const scale = chroma.scale(['#f3f4f6', baseColor]).domain([minPct, maxPct]);
+
+            geojsonLayer.eachLayer(layer => {
+                const rId = parseInt(layer.feature.properties.codregion);
+                const avg = regionavgs.get(rId);
+
+                if (avg !== undefined) {
+                    layer.setStyle({
+                        fillColor: scale(avg).hex(),
+                        fillOpacity: 0.8,
+                        weight: 2,
+                        color: '#fff'
+                    });
+                    layer.bindTooltip(`
+                    <strong>${layer.feature.properties.nomregion}</strong><br>
+                    Promedio: ${(avg * 100).toFixed(2)}%
+                `);
+                } else {
+                    layer.setStyle({ fillColor: '#dcdcdc', fillOpacity: 0.3 });
+                }
+            });
+        }
+
+        function resetMap() {
+            geojsonLayer.eachLayer(l => l.setStyle({ fillColor: "#dcdcdc", fillOpacity: 0.5, weight: 1 }));
+        }
+
+    </script>
+</body>
+
+</html>
