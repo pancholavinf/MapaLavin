@@ -143,8 +143,43 @@
 
         if (resultsChart) resultsChart.destroy();
         resultsChart = new Chart(resultsCanvas.getContext('2d'), {
-            type: 'bar', data: { labels: data.map(r => r.nombre_completo), datasets: [{ data: data.map(r => totalVotos > 0 ? ((Number(r.total_votos) / totalVotos) * 100).toFixed(2) : 0), backgroundColor: data.map(r => r.color_hex || '#cccccc') }] },
-            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { max: 100, ticks: { callback: v => `${v}%` } } }, plugins: { legend: { display: false } } }
+            type: 'bar',
+            data: {
+                labels: data.map(r => r.nombre_completo),
+                datasets: [{
+                    data: data.map(r => totalVotos > 0 ? ((Number(r.total_votos) / totalVotos) * 100).toFixed(2) : 0),
+                    backgroundColor: data.map(r => r.color_hex || '#cccccc'),
+                    borderRadius: 6,
+                    barPercentage: 0.7
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        max: 100,
+                        grid: { display: false },
+                        ticks: { callback: v => `${v}%`, font: { family: 'Inter' } }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { font: { family: 'Inter', weight: '500' } }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: { family: 'Inter', size: 13 },
+                        bodyFont: { family: 'Inter', size: 13 },
+                        padding: 10,
+                        cornerRadius: 8,
+                        displayColors: false
+                    }
+                }
+            }
         });
     }
 
@@ -156,8 +191,43 @@
 
         if (partidosChart) partidosChart.destroy();
         partidosChart = new Chart(partidosCanvas.getContext('2d'), {
-            type: 'bar', data: { labels: data.map(r => r.nombre_partido), datasets: [{ data: data.map(r => totalVotos > 0 ? ((Number(r.total_votos) / totalVotos) * 100).toFixed(2) : 0), backgroundColor: data.map(r => r.color_hex || '#cccccc') }] },
-            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { max: 100, ticks: { callback: v => `${v}%` } } }, plugins: { legend: { display: false } } }
+            type: 'bar',
+            data: {
+                labels: data.map(r => r.nombre_partido),
+                datasets: [{
+                    data: data.map(r => totalVotos > 0 ? ((Number(r.total_votos) / totalVotos) * 100).toFixed(2) : 0),
+                    backgroundColor: data.map(r => r.color_hex || '#cccccc'),
+                    borderRadius: 6,
+                    barPercentage: 0.7
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        max: 100,
+                        grid: { display: false },
+                        ticks: { callback: v => `${v}%`, font: { family: 'Inter' } }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { font: { family: 'Inter', weight: '500' } }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: { family: 'Inter', size: 13 },
+                        bodyFont: { family: 'Inter', size: 13 },
+                        padding: 10,
+                        cornerRadius: 8,
+                        displayColors: false
+                    }
+                }
+            }
         });
     }
 
@@ -171,8 +241,33 @@
 
         if (participationChart) participationChart.destroy();
         participationChart = new Chart(participationCanvas.getContext('2d'), {
-            type: 'doughnut', data: { labels: [`Votantes (${percentage}%)`, 'Abstención'], datasets: [{ data: [votantes, noVotantes], backgroundColor: ['#3b82f6', '#e5e7eb'] }] },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
+            type: 'doughnut',
+            data: {
+                labels: [`Votantes (${percentage}%)`, 'Abstención'],
+                datasets: [{
+                    data: [votantes, noVotantes],
+                    backgroundColor: ['#3b82f6', '#e5e7eb'],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { family: 'Inter', size: 12 }, usePointStyle: true, padding: 20 }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        bodyFont: { family: 'Inter', size: 13 },
+                        padding: 10,
+                        cornerRadius: 8
+                    }
+                }
+            }
         });
     }
 

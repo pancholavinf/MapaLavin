@@ -1,0 +1,22 @@
+[
+  {
+    "nombre_partido": "PARTIDO DEMOCRATA CRISTIANO (PDC)",
+    "total_votos": "4044112",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "nombre_partido": "INDEPENDIENTE",
+    "total_votos": "2521617",
+    "color_hex": "#fffac8"
+  },
+  {
+    "nombre_partido": "PARTIDO COMUNISTA (PC)",
+    "total_votos": "327404",
+    "color_hex": "#e6beff"
+  },
+  {
+    "nombre_partido": "PARTIDO HUMANISTA (PH)",
+    "total_votos": "81814",
+    "color_hex": "#9a6324"
+  }
+]

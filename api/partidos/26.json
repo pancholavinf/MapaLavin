@@ -1,0 +1,47 @@
+[
+  {
+    "nombre_partido": "PARTIDO SOCIALISTA (PS)",
+    "total_votos": "3075839",
+    "color_hex": "#800000"
+  },
+  {
+    "nombre_partido": "UNION DEMOCRATA INDEPENDIENTE (UDI)",
+    "total_votos": "1648481",
+    "color_hex": "#aaffc3"
+  },
+  {
+    "nombre_partido": "PARTIDO PROGRESISTA (PRO)",
+    "total_votos": "723542",
+    "color_hex": "#f032e6"
+  },
+  {
+    "nombre_partido": "INDEPENDIENTE",
+    "total_votos": "666015",
+    "color_hex": "#bcf60c"
+  },
+  {
+    "nombre_partido": "PARTIDO HUMANISTA (PH)",
+    "total_votos": "185072",
+    "color_hex": "#808000"
+  },
+  {
+    "nombre_partido": "PARTIDO ECOLOGISTA VERDE (PEV)",
+    "total_votos": "154648",
+    "color_hex": "#808080"
+  },
+  {
+    "nombre_partido": "PARTIDO IGUALDAD",
+    "total_votos": "81873",
+    "color_hex": "#000075"
+  },
+  {
+    "nombre_partido": "PARTIDO REGIONALISTA (PRI)",
+    "total_votos": "37744",
+    "color_hex": "#ffd8b1"
+  },
+  {
+    "nombre_partido": "INDEPENDIENTE (EX-DC)",
+    "total_votos": "12594",
+    "color_hex": "#e6194b"
+  }
+]

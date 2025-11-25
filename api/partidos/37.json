@@ -1,0 +1,22 @@
+[
+  {
+    "nombre_partido": "RENOVACION NACIONAL (RN)",
+    "total_votos": "3074164",
+    "color_hex": "#fabebe"
+  },
+  {
+    "nombre_partido": "PARTIDO DEMOCRATA CRISTIANO (PDC)",
+    "total_votos": "2065061",
+    "color_hex": "#3cb44b"
+  },
+  {
+    "nombre_partido": "INDEPENDIENTE (EX-PS)",
+    "total_votos": "1405124",
+    "color_hex": "#f032e6"
+  },
+  {
+    "nombre_partido": "PARTIDO COMUNISTA (PC)",
+    "total_votos": "433195",
+    "color_hex": "#ffe119"
+  }
+]

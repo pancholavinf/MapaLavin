@@ -8,32 +8,33 @@ html {
 
 body {
     background-color: #f3f4f6;
-    background-image:
-        linear-gradient(45deg,
-            rgba(218, 41, 28, 0.05) 0%, rgba(218, 41, 28, 0.05) 20%,
-            rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 40%,
-            rgba(0, 51, 160, 0.05) 40%, rgba(0, 51, 160, 0.05) 60%,
-            transparent 60%
-        );
-    background-size: 300px 300px;
+    background-image: linear-gradient(135deg,
+        #DA291C 0%, #DA291C 33.33%,
+        #FFFFFF 33.33%, #FFFFFF 66.66%,
+        #0033A0 66.66%, #0033A0 100%
+    );
+    background-size: 100% 100%;
     background-attachment: fixed;
     height: 100vh;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-family: 'Inter', sans-serif;
 }
 
 #container { display: flex; height: 100%; }
 
 #sidebar {
-    width: 550px; /* Ancho aumentado */
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 1.5em;
+    width: 550px;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2em;
     overflow-y: auto;
-    border-right: 1px solid rgba(209, 213, 219, 0.7);
+    border-right: 1px solid rgba(209, 213, 219, 0.8);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+    z-index: 1000;
 }
 
 #map { flex-grow: 1; background-color: #e5e7eb; }
@@ -107,9 +108,15 @@ h2 { font-size: 1.5em; font-weight: 700; margin-top: 0; color: #111827; }
 .candidate-card {
     background-color: #fff;
     border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 1em;
+    border-radius: 12px;
+    padding: 1.25em;
     margin-bottom: 1em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.candidate-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 .candidate-card h5 { margin: 0 0 10px 0; font-size: 1.1em; }
 .candidate-card p { margin: 4px 0; font-size: 0.9em; color: #4b5563; }

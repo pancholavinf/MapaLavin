@@ -1,0 +1,32 @@
+[
+  {
+    "nombre_partido": "PARTIDO SOCIALISTA (PS)",
+    "total_votos": "3383334",
+    "color_hex": "#911eb4"
+  },
+  {
+    "nombre_partido": "UNION DEMOCRATA INDEPENDIENTE (UDI)",
+    "total_votos": "3352192",
+    "color_hex": "#4363d8"
+  },
+  {
+    "nombre_partido": "PARTIDO HUMANISTA (PH)",
+    "total_votos": "225224",
+    "color_hex": "#bcf60c"
+  },
+  {
+    "nombre_partido": "INDEPENDIENTE (EX-DC)",
+    "total_votos": "36235",
+    "color_hex": "#fabebe"
+  },
+  {
+    "nombre_partido": "PARTIDO COMUNISTA (PC)",
+    "total_votos": "31319",
+    "color_hex": "#f032e6"
+  },
+  {
+    "nombre_partido": "INDEPENDIENTE",
+    "total_votos": "26812",
+    "color_hex": "#46f0f0"
+  }
+]

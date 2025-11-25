@@ -1,0 +1,22 @@
+[
+  {
+    "nombre_partido": "PARTIDO SOCIALISTA (PS)",
+    "total_votos": "3190691",
+    "color_hex": "#800000"
+  },
+  {
+    "nombre_partido": "UNION DEMOCRATA INDEPENDIENTE (UDI)",
+    "total_votos": "1763694",
+    "color_hex": "#4363d8"
+  },
+  {
+    "nombre_partido": "RENOVACION NACIONAL (RN)",
+    "total_votos": "1612608",
+    "color_hex": "#fabebe"
+  },
+  {
+    "nombre_partido": "PARTIDO HUMANISTA (PH)",
+    "total_votos": "375048",
+    "color_hex": "#f58231"
+  }
+]
