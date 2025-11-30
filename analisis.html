@@ -237,22 +237,10 @@
                 const myRes = natRes.find(r => r.nombre_completo === name);
                 if (myRes) history.push({ election: idEleccion, ...myRes });
 
-                // Get regional breakdown for heatmap
-                const mapRes = await fetch(`api/resultados/mapa/${idEleccion}.json`).then(r => r.json());
-                // Note: mapRes usually contains the WINNER. We need detailed regional data.
-                // If the API doesn't support "all candidates per region", we might have to fetch region by region.
-                // Assuming we have a way to get detailed regional data. 
-                // For this demo, let's assume we iterate regions (expensive) or have a bulk endpoint.
-                // Let's try to fetch `api/resultados/region/${idEleccion}/{regionId}.json` for all regions? Too many requests.
-                // OPTIMIZATION: We'll use the `mapa` endpoint if it has detailed data, otherwise we might need a new endpoint.
-                // Checking `api/resultados/mapa` structure... it returns an array of regions with the winner.
-                // We need the specific candidate's votes.
-
-                // FALLBACK STRATEGY for Demo: Generate synthetic heatmap data based on the candidate's national performance 
-                // combined with some random regional variance if we can't get real data easily without 16 calls.
-                // OR: Just do the 16 calls for the selected candidate. It's acceptable for a specific analysis action.
-
+                // Get regional breakdown for heatmap & regional chart
+                // We will try to fetch regional data. For the demo, we might need to iterate regions.
                 const regions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
                 await Promise.all(regions.map(async (rId) => {
                     try {
                         const rData = await fetch(`api/resultados/region/${idEleccion}/${rId}.json`).then(r => r.json());
@@ -269,8 +257,22 @@
             // 2. Render Details
             container.innerHTML = `
             <div class="candidate-profile">
-                <h3>${candidate.nombre_completo}</h3>
-                <p><strong>Partido:</strong> ${candidate.nombre_partido || 'Independiente'}</p>
+                <div class="profile-header">
+                    <h3>${candidate.nombre_completo}</h3>
+                    <span class="party-badge" style="background-color: ${candidate.color_hex || '#ccc'}">${candidate.nombre_partido || 'Independiente'}</span>
+                </div>
+                
+                <div class="charts-grid">
+                    <div class="chart-box">
+                        <h4>Historial de Votos</h4>
+                        <div style="height: 250px;"><canvas id="history-chart"></canvas></div>
+                    </div>
+                    <div class="chart-box">
+                        <h4>Desempeño Regional (Promedio)</h4>
+                        <div style="height: 250px;"><canvas id="regional-chart"></canvas></div>
+                    </div>
+                </div>
+
                 <div class="history-list">
                     <h4>Historial Electoral</h4>
                     ${history.map(h => `
@@ -280,6 +282,7 @@
                         </div>
                     `).join('')}
                 </div>
+
                 <div class="heatmap-legend">
                     <h4>Mapa de Calor (Promedio Histórico)</h4>
                     <div class="gradient-bar" style="background: linear-gradient(to right, #eee, ${candidate.color_hex || '#333'})"></div>
@@ -288,12 +291,86 @@
             </div>
         `;
 
-            // 3. Update Heatmap
+            // 3. Render Charts
+            renderHistoryChart(history, candidate.color_hex);
+            renderRegionalChart(regionVotes, candidate.color_hex);
+
+            // 4. Update Heatmap
             updateHeatmap(regionVotes, candidate.color_hex || '#333333');
         };
 
+        function renderHistoryChart(history, color) {
+            const ctx = document.getElementById('history-chart').getContext('2d');
+            history.sort((a, b) => a.election - b.election);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: history.map(h => eleccionesData.find(e => e.id_eleccion == h.election).nombre_eleccion),
+                    datasets: [{
+                        label: 'Votos',
+                        data: history.map(h => h.total_votos),
+                        borderColor: color || '#3b82f6',
+                        backgroundColor: (color || '#3b82f6') + '20',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function renderRegionalChart(regionVotesMap, color) {
+            const ctx = document.getElementById('regional-chart').getContext('2d');
+            const labels = [];
+            const data = [];
+
+            const regionNames = {};
+            geojsonLayer.eachLayer(l => regionNames[l.feature.properties.codregion] = l.feature.properties.nomregion);
+
+            // Sort regions by ID
+            const sortedIds = Array.from(regionVotesMap.keys()).sort((a, b) => a - b);
+
+            sortedIds.forEach(rId => {
+                const votes = regionVotesMap.get(rId);
+                const avg = votes.reduce((s, v) => s + v.pct, 0) / votes.length;
+                labels.push(regionNames[rId] || `Reg ${rId}`);
+                data.push((avg * 100).toFixed(2));
+            });
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '% Promedio',
+                        data: data,
+                        backgroundColor: color || '#3b82f6',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false }, ticks: { maxRotation: 90, minRotation: 90, font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
         function updateHeatmap(regionVotesMap, baseColor) {
-            // Calculate average per region
             const regionavgs = new Map();
             let minPct = 1, maxPct = 0;
 
@@ -304,7 +381,6 @@
                 if (avg > maxPct) maxPct = avg;
             });
 
-            // Generate color scale
             const scale = chroma.scale(['#f3f4f6', baseColor]).domain([minPct, maxPct]);
 
             geojsonLayer.eachLayer(layer => {
@@ -331,7 +407,6 @@
         function resetMap() {
             geojsonLayer.eachLayer(l => l.setStyle({ fillColor: "#dcdcdc", fillOpacity: 0.5, weight: 1 }));
         }
-
     </script>
 </body>
 
