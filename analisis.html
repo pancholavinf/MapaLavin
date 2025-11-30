@@ -102,16 +102,10 @@
                 eleccion2Select.add(opt.cloneNode(true));
             });
 
-            // Pre-load candidates for search (simplified for demo, in real app might search via API)
-            // For now we will load candidates when an election is selected or lazily
-            // To make search work across ALL elections, we'd need a master candidate list. 
-            // We'll simulate this by fetching candidates from the first few elections for the demo.
             loadAllCandidates();
         });
 
         async function loadAllCandidates() {
-            // In a real app, this should be a dedicated endpoint. 
-            // We will iterate available elections to build a search index.
             const allCandidatos = new Map();
 
             for (const el of eleccionesData) {
@@ -138,7 +132,6 @@
                 e.target.classList.add('active');
                 document.getElementById(`${e.target.dataset.mode}-view`).classList.add('active');
 
-                // Reset map when switching modes
                 resetMap();
             });
         });
@@ -158,23 +151,26 @@
             container.innerHTML = '<p class="loader">Cargando datos...</p>';
 
             try {
-                const [res1, res2] = await Promise.all([
+                const [res1, res2, stats1, stats2, cands1, cands2] = await Promise.all([
                     fetch(`api/resultados/pais/${id1}.json`).then(r => r.json()),
-                    fetch(`api/resultados/pais/${id2}.json`).then(r => r.json())
+                    fetch(`api/resultados/pais/${id2}.json`).then(r => r.json()),
+                    fetch(`api/estadisticas/pais/${id1}.json`).then(r => r.json()).catch(() => null),
+                    fetch(`api/estadisticas/pais/${id2}.json`).then(r => r.json()).catch(() => null),
+                    fetch(`api/candidatos/${id1}.json`).then(r => r.json()).catch(() => []),
+                    fetch(`api/candidatos/${id2}.json`).then(r => r.json()).catch(() => [])
                 ]);
 
-                renderComparison(res1, res2, id1, id2);
+                renderComparison(res1, res2, id1, id2, stats1, stats2, cands1, cands2);
             } catch (e) {
                 container.innerHTML = '<p class="error">Error al cargar datos.</p>';
             }
         }
 
-        function renderComparison(data1, data2, id1, id2) {
+        function renderComparison(data1, data2, id1, id2, stats1, stats2, cands1, cands2) {
             const container = document.getElementById('comparison-results');
             const name1 = eleccionesData.find(e => e.id_eleccion == id1).nombre_eleccion;
             const name2 = eleccionesData.find(e => e.id_eleccion == id2).nombre_eleccion;
 
-            // Simple Side-by-Side Table
             let html = `
             <div class="comparison-grid">
                 <div class="comp-col">
@@ -186,8 +182,24 @@
                     ${renderMiniTable(data2)}
                 </div>
             </div>
+            
+            <div class="charts-row">
+                <div class="chart-box">
+                    <h4>Espectro Político (Izquierda vs Centro vs Derecha)</h4>
+                    <div style="height: 250px;"><canvas id="spectrum-chart"></canvas></div>
+                </div>
+                <div class="chart-box">
+                    <h4>Participación Electoral</h4>
+                    <div style="height: 250px;"><canvas id="participation-chart"></canvas></div>
+                </div>
+            </div>
         `;
             container.innerHTML = html;
+
+            setTimeout(() => {
+                renderSpectrumChart(data1, data2, cands1, cands2, name1, name2);
+                renderParticipationChart(stats1, stats2, name1, name2);
+            }, 100);
         }
 
         function renderMiniTable(data) {
@@ -202,6 +214,71 @@
                 `).join('')}
             </table>
         `;
+        }
+
+        function renderSpectrumChart(data1, data2, cands1, cands2, name1, name2) {
+            const ctx = document.getElementById('spectrum-chart').getContext('2d');
+
+            const processSpectrum = (data, cands) => {
+                const spectrum = { 'Izquierda': 0, 'Centro': 0, 'Derecha': 0, 'Independiente': 0 };
+                data.forEach(r => {
+                    const cand = cands.find(c => c.nombre_completo === r.nombre_completo);
+                    const tendency = cand ? (cand.tendencia || 'Independiente') : 'Independiente';
+                    if (spectrum[tendency] !== undefined) {
+                        spectrum[tendency] += Number(r.total_votos);
+                    } else {
+                        spectrum['Independiente'] += Number(r.total_votos);
+                    }
+                });
+                return spectrum;
+            };
+
+            const s1 = processSpectrum(data1, cands1);
+            const s2 = processSpectrum(data2, cands2);
+
+            const labels = ['Izquierda', 'Centro', 'Derecha'];
+            const ds1 = labels.map(l => s1[l]);
+            const ds2 = labels.map(l => s2[l]);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: name1, data: ds1, backgroundColor: '#3b82f6' },
+                        { label: name2, data: ds2, backgroundColor: '#ef4444' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+
+        function renderParticipationChart(stats1, stats2, name1, name2) {
+            const ctx = document.getElementById('participation-chart').getContext('2d');
+
+            const p1 = stats1 ? (Number(stats1.total_votantes) / Number(stats1.total_electores) * 100) : 0;
+            const p2 = stats2 ? (Number(stats2.total_votantes) / Number(stats2.total_electores) * 100) : 0;
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [name1, name2],
+                    datasets: [{
+                        label: '% Participación',
+                        data: [p1, p2],
+                        backgroundColor: ['#3b82f6', '#ef4444']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, max: 100 } }
+                }
+            });
         }
 
         // Candidate Analysis & Heatmap Logic
@@ -227,20 +304,24 @@
 
             container.innerHTML = '<p class="loader">Analizando historial...</p>';
 
-            // 1. Fetch results for this candidate across all their elections
             const history = [];
-            const regionVotes = new Map(); // region_id -> { total_votes: 0, candidate_votes: 0 }
+            const regionVotes = new Map();
 
             for (const idEleccion of candidate.elecciones) {
-                // Get national result for summary
                 const natRes = await fetch(`api/resultados/pais/${idEleccion}.json`).then(r => r.json());
+                const stats = await fetch(`api/estadisticas/pais/${idEleccion}.json`).then(r => r.json()).catch(() => ({ total_votantes: 0 }));
+
                 const myRes = natRes.find(r => r.nombre_completo === name);
-                if (myRes) history.push({ election: idEleccion, ...myRes });
+                if (myRes) {
+                    const totalVotosEleccion = natRes.reduce((s, x) => s + Number(x.total_votos), 0);
+                    history.push({
+                        election: idEleccion,
+                        ...myRes,
+                        pct: (Number(myRes.total_votos) / totalVotosEleccion) * 100
+                    });
+                }
 
-                // Get regional breakdown for heatmap & regional chart
-                // We will try to fetch regional data. For the demo, we might need to iterate regions.
                 const regions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-
                 await Promise.all(regions.map(async (rId) => {
                     try {
                         const rData = await fetch(`api/resultados/region/${idEleccion}/${rId}.json`).then(r => r.json());
@@ -254,7 +335,6 @@
                 }));
             }
 
-            // 2. Render Details
             container.innerHTML = `
             <div class="candidate-profile">
                 <div class="profile-header">
@@ -278,7 +358,7 @@
                     ${history.map(h => `
                         <div class="history-item">
                             <span>${eleccionesData.find(e => e.id_eleccion == h.election).nombre_eleccion}</span>
-                            <strong>${Number(h.total_votos).toLocaleString('es-CL')} votos</strong>
+                            <strong>${Number(h.total_votos).toLocaleString('es-CL')} votos (${h.pct.toFixed(1)}%)</strong>
                         </div>
                     `).join('')}
                 </div>
@@ -291,11 +371,8 @@
             </div>
         `;
 
-            // 3. Render Charts
             renderHistoryChart(history, candidate.color_hex);
             renderRegionalChart(regionVotes, candidate.color_hex);
-
-            // 4. Update Heatmap
             updateHeatmap(regionVotes, candidate.color_hex || '#333333');
         };
 
@@ -304,25 +381,45 @@
             history.sort((a, b) => a.election - b.election);
 
             new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: {
                     labels: history.map(h => eleccionesData.find(e => e.id_eleccion == h.election).nombre_eleccion),
-                    datasets: [{
-                        label: 'Votos',
-                        data: history.map(h => h.total_votos),
-                        borderColor: color || '#3b82f6',
-                        backgroundColor: (color || '#3b82f6') + '20',
-                        fill: true,
-                        tension: 0.3,
-                        pointRadius: 6
-                    }]
+                    datasets: [
+                        {
+                            label: 'Votos',
+                            data: history.map(h => h.total_votos),
+                            backgroundColor: (color || '#3b82f6'),
+                            order: 2,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: '% Votos',
+                            data: history.map(h => h.pct),
+                            borderColor: '#10b981',
+                            backgroundColor: '#10b981',
+                            type: 'line',
+                            order: 1,
+                            yAxisID: 'y1',
+                            tension: 0.3
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: { legend: { display: true } },
                     scales: {
-                        y: { beginAtZero: true, grid: { display: false } },
+                        y: {
+                            beginAtZero: true,
+                            position: 'left',
+                            title: { display: true, text: 'Total Votos' }
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            title: { display: true, text: 'Porcentaje (%)' }
+                        },
                         x: { grid: { display: false } }
                     }
                 }
@@ -337,7 +434,6 @@
             const regionNames = {};
             geojsonLayer.eachLayer(l => regionNames[l.feature.properties.codregion] = l.feature.properties.nomregion);
 
-            // Sort regions by ID
             const sortedIds = Array.from(regionVotesMap.keys()).sort((a, b) => a - b);
 
             sortedIds.forEach(rId => {
