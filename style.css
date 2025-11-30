@@ -1,4 +1,4 @@
-/* Version 1.1 - Fixed import issues */
+/* Version 1.2 - Fixed import and accessibility */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 html {
@@ -87,6 +87,11 @@ h2 {
     display: flex;
     align-items: center;
     gap: 1em;
+}
+
+.label-text {
+    font-weight: 500;
+    color: #374151;
 }
 
 .mode-selector {

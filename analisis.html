@@ -24,7 +24,7 @@
 
             <div class="analysis-controls">
                 <div class="control-group">
-                    <label>Modo:</label>
+                    <span class="label-text">Modo:</span>
                     <div class="mode-selector">
                         <button class="mode-btn active" data-mode="compare">Comparar Elecciones</button>
                         <button class="mode-btn" data-mode="candidate">Analizar Candidato</button>
@@ -35,13 +35,13 @@
             <div id="compare-view" class="analysis-view active">
                 <div class="selection-area">
                     <div class="select-box">
-                        <label>Elección 1</label>
+                        <label for="eleccion-1">Elección 1</label>
                         <select id="eleccion-1" class="eleccion-select">
                             <option value="">Seleccionar...</option>
                         </select>
                     </div>
                     <div class="select-box">
-                        <label>Elección 2</label>
+                        <label for="eleccion-2">Elección 2</label>
                         <select id="eleccion-2" class="eleccion-select">
                             <option value="">Seleccionar...</option>
                         </select>
@@ -55,7 +55,7 @@
             <div id="candidate-view" class="analysis-view">
                 <div class="selection-area">
                     <div class="select-box full-width">
-                        <label>Buscar Candidato</label>
+                        <label for="candidate-search">Buscar Candidato</label>
                         <input type="text" id="candidate-search" placeholder="Escribe el nombre del candidato...">
                         <div id="candidate-suggestions" class="suggestions-list"></div>
                     </div>
